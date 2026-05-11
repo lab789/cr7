@@ -1,3 +1,4 @@
+
 ╔══════════════════════════════════════╗
 ║ STEP 1 : OPEN MYSQL SHELL           ║
 ║ TERMINAL 1                          ║
@@ -51,7 +52,15 @@ SELECT * FROM students;
 
 
 ╔══════════════════════════════════════╗
-║ STEP 6 : TAKE BACKUP                ║
+║ STEP 6 : OPEN TERMINAL 2            ║
+║ UBUNTU NEW TAB                      ║
+╚══════════════════════════════════════╝
+
+Click + icon in Ubuntu terminal
+
+
+╔══════════════════════════════════════╗
+║ STEP 7 : TAKE BACKUP                ║
 ║ TERMINAL 2                          ║
 ╚══════════════════════════════════════╝
 
@@ -59,7 +68,7 @@ sudo mysqldump collegeDB > collegeDB_backup.sql
 
 
 ╔══════════════════════════════════════╗
-║ STEP 7 : CHECK BACKUP FILE          ║
+║ STEP 8 : CHECK BACKUP FILE          ║
 ║ TERMINAL 2                          ║
 ╚══════════════════════════════════════╝
 
@@ -69,7 +78,7 @@ cat collegeDB_backup.sql
 
 
 ╔══════════════════════════════════════╗
-║ STEP 8 : DELETE DATABASE            ║
+║ STEP 9 : DELETE DATABASE            ║
 ║ TERMINAL 1                          ║
 ╚══════════════════════════════════════╝
 
@@ -77,20 +86,38 @@ DROP DATABASE collegeDB;
 
 
 ╔══════════════════════════════════════╗
-║ STEP 9 : RESTORE DATABASE           ║
-║ TERMINAL 2             ║
+║ STEP 10 : CREATE DATABASE AGAIN     ║
+║ TERMINAL 1                          ║
 ╚══════════════════════════════════════╝
 
 CREATE DATABASE collegeDB;
+
+EXIT;
+
+
+╔══════════════════════════════════════╗
+║ STEP 11 : RESTORE DATABASE          ║
+║ TERMINAL 2                          ║
+╚══════════════════════════════════════╝
 
 sudo mysql collegeDB < collegeDB_backup.sql
 
 
 ╔══════════════════════════════════════╗
-║ STEP 10 : VERIFY RECOVERY           ║
+║ STEP 12 : OPEN MYSQL AGAIN          ║
+║ TERMINAL 1                          ║
+╚══════════════════════════════════════╝
+
+sudo mysql
+
+
+╔══════════════════════════════════════╗
+║ STEP 13 : VERIFY RECOVERY           ║
 ║ TERMINAL 1                          ║
 ╚══════════════════════════════════════╝
 
 USE collegeDB;
+
+TERMINAL 1
 
 SELECT * FROM students;
