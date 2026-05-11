@@ -78,7 +78,7 @@ DROP DATABASE collegeDB;
 
 ╔══════════════════════════════════════╗
 ║ STEP 9 : RESTORE DATABASE           ║
-║ TERMINAL 1 & TERMINAL 2             ║
+║ TERMINAL 2             ║
 ╚══════════════════════════════════════╝
 
 CREATE DATABASE collegeDB;
