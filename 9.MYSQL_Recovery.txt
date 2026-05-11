@@ -1,0 +1,96 @@
+╔══════════════════════════════════════╗
+║ STEP 1 : OPEN MYSQL SHELL           ║
+║ TERMINAL 1                          ║
+╚══════════════════════════════════════╝
+
+sudo mysql
+
+
+╔══════════════════════════════════════╗
+║ STEP 2 : CREATE DATABASE            ║
+║ TERMINAL 1                          ║
+╚══════════════════════════════════════╝
+
+CREATE DATABASE collegeDB;
+
+USE collegeDB;
+
+
+╔══════════════════════════════════════╗
+║ STEP 3 : CREATE TABLE               ║
+║ TERMINAL 1                          ║
+╚══════════════════════════════════════╝
+
+CREATE TABLE students (
+studentId INT PRIMARY KEY,
+name VARCHAR(50),
+age INT,
+city VARCHAR(50)
+);
+
+
+╔══════════════════════════════════════╗
+║ STEP 4 : INSERT DATA                ║
+║ TERMINAL 1                          ║
+╚══════════════════════════════════════╝
+
+INSERT INTO students VALUES
+(101, 'Sujal Malla', 21, 'Mumbai'),
+(102, 'Suraj Pawar', 22, 'Kolhapur'),
+(103, 'Jaysingh Suryavanshi', 23, 'Nashik'),
+(104, 'Durgesh Chavan', 24, 'Satara'),
+(105, 'Yash Devale', 21, 'Pune');
+
+
+╔══════════════════════════════════════╗
+║ STEP 5 : VERIFY DATA                ║
+║ TERMINAL 1                          ║
+╚══════════════════════════════════════╝
+
+SELECT * FROM students;
+
+
+╔══════════════════════════════════════╗
+║ STEP 6 : TAKE BACKUP                ║
+║ TERMINAL 2                          ║
+╚══════════════════════════════════════╝
+
+sudo mysqldump collegeDB > collegeDB_backup.sql
+
+
+╔══════════════════════════════════════╗
+║ STEP 7 : CHECK BACKUP FILE          ║
+║ TERMINAL 2                          ║
+╚══════════════════════════════════════╝
+
+ls
+
+cat collegeDB_backup.sql
+
+
+╔══════════════════════════════════════╗
+║ STEP 8 : DELETE DATABASE            ║
+║ TERMINAL 1                          ║
+╚══════════════════════════════════════╝
+
+DROP DATABASE collegeDB;
+
+
+╔══════════════════════════════════════╗
+║ STEP 9 : RESTORE DATABASE           ║
+║ TERMINAL 1 & TERMINAL 2             ║
+╚══════════════════════════════════════╝
+
+CREATE DATABASE collegeDB;
+
+sudo mysql collegeDB < collegeDB_backup.sql
+
+
+╔══════════════════════════════════════╗
+║ STEP 10 : VERIFY RECOVERY           ║
+║ TERMINAL 1                          ║
+╚══════════════════════════════════════╝
+
+USE collegeDB;
+
+SELECT * FROM students;
