@@ -1,0 +1,226 @@
+╔══════════════════════════════════════╗
+║        STEP 1 : CREATE DATABASE     ║
+╚══════════════════════════════════════╝
+
+use socialMediaDB
+
+
+╔══════════════════════════════════════╗
+║      STEP 2 : INSERT DOCUMENTS      ║
+╚══════════════════════════════════════╝
+
+db.posts.insertMany([
+{
+    postId: 1,
+    username: "yash_devale",
+    content: "Learning MongoDB is amazing! #MongoDB #NoSQL #Database",
+    likes: 120,
+    comments: 15,
+    hashtags: ["MongoDB", "NoSQL", "Database"],
+    location: "Pune",
+    postDate: new Date("2026-04-01")
+},
+{
+    postId: 2,
+    username: "sujal_malla",
+    content: "AI and ML are shaping the future. #AI #MachineLearning",
+    likes: 220,
+    comments: 40,
+    hashtags: ["AI", "MachineLearning"],
+    location: "Mumbai",
+    postDate: new Date("2026-04-02")
+},
+{
+    postId: 3,
+    username: "jaysingh_s",
+    content: "Building projects using Python. #Python #Coding",
+    likes: 180,
+    comments: 25,
+    hashtags: ["Python", "Coding"],
+    location: "Nashik",
+    postDate: new Date("2026-04-03")
+},
+{
+    postId: 4,
+    username: "dugesh_chavan",
+    content: "Cyber Security is important today. #CyberSecurity #IT",
+    likes: 160,
+    comments: 18,
+    hashtags: ["CyberSecurity", "IT"],
+    location: "Satara",
+    postDate: new Date("2026-04-04")
+},
+{
+    postId: 5,
+    username: "suraj_pawar",
+    content: "Big data analytics with MongoDB. #BigData #MongoDB",
+    likes: 250,
+    comments: 50,
+    hashtags: ["BigData", "MongoDB"],
+    location: "Kolhapur",
+    postDate: new Date("2026-04-05")
+}
+])
+
+
+╔══════════════════════════════════════╗
+║       STEP 3 : DISPLAY POSTS        ║
+╚══════════════════════════════════════╝
+
+db.posts.find().pretty()
+
+
+╔══════════════════════════════════════╗
+║       STEP 4 : FILTER QUERIES       ║
+╚══════════════════════════════════════╝
+
+db.posts.find({
+    likes: { $gt: 150 }
+})
+
+db.posts.find({
+    location: "Pune"
+})
+
+db.posts.find({
+    hashtags: "MongoDB"
+})
+
+
+╔══════════════════════════════════════╗
+║          STEP 5 : SORTING           ║
+╚══════════════════════════════════════╝
+
+db.posts.find().sort({
+    likes: -1
+})
+
+db.posts.find().sort({
+    postDate: 1
+})
+
+
+╔══════════════════════════════════════╗
+║      STEP 6 : AGGREGATION           ║
+╚══════════════════════════════════════╝
+
+db.posts.aggregate([
+{
+    $group: {
+        _id: null,
+        TotalLikes: { $sum: "$likes" }
+    }
+}
+])
+
+db.posts.aggregate([
+{
+    $group: {
+        _id: null,
+        AverageLikes: { $avg: "$likes" }
+    }
+}
+])
+
+db.posts.aggregate([
+{
+    $unwind: "$hashtags"
+},
+{
+    $group: {
+        _id: "$hashtags",
+        Count: { $sum: 1 }
+    }
+},
+{
+    $sort: {
+        Count: -1
+    }
+}
+])
+
+db.posts.aggregate([
+{
+    $sort: {
+        likes: -1
+    }
+},
+{
+    $limit: 1
+}
+])
+
+db.posts.aggregate([
+{
+    $group: {
+        _id: "$location",
+        TotalPosts: { $sum: 1 }
+    }
+}
+])
+
+
+╔══════════════════════════════════════╗
+║      STEP 7 : UPDATE QUERY          ║
+╚══════════════════════════════════════╝
+
+db.posts.updateOne(
+{
+    username: "yash_devale"
+},
+{
+    $set: {
+        likes: 140
+    }
+}
+)
+
+
+╔══════════════════════════════════════╗
+║      STEP 8 : DELETE QUERY          ║
+╚══════════════════════════════════════╝
+
+db.posts.deleteOne({
+    postId: 4
+})
+
+
+╔══════════════════════════════════════╗
+║      STEP 9 : CREATE INDEXES        ║
+╚══════════════════════════════════════╝
+
+db.posts.createIndex({
+    username: 1
+})
+
+db.posts.createIndex({
+    hashtags: 1
+})
+
+db.posts.createIndex({
+    location: 1,
+    likes: -1
+})
+
+
+╔══════════════════════════════════════╗
+║      STEP 10 : VIEW INDEXES         ║
+╚══════════════════════════════════════╝
+
+db.posts.getIndexes()
+
+
+╔══════════════════════════════════════╗
+║   STEP 11 : PERFORMANCE ANALYSIS    ║
+╚══════════════════════════════════════╝
+
+db.posts.find({
+    hashtags: "MongoDB"
+}).explain("executionStats")
+
+
+╔══════════════════════════════════════╗
+║       STEP 12 : FINAL OUTPUT        ║
+╚══════════════════════════════════════╝
+
+db.posts.find().pretty()
