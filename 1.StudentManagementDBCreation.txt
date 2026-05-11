@@ -1,0 +1,71 @@
+CREATE DATABASE StudentManagementDB;
+
+USE StudentManagementDB;
+
+CREATE TABLE Student(
+    StudentID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Email VARCHAR(50),
+    Age INT,
+    Address VARCHAR(100)
+);
+
+CREATE TABLE Instructor(
+    InstructorID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Email VARCHAR(50),
+    Department VARCHAR(50)
+);
+
+CREATE TABLE Course(
+    CourseID INT PRIMARY KEY,
+    CourseName VARCHAR(50),
+    Credits INT,
+    InstructorID INT,
+    FOREIGN KEY (InstructorID) REFERENCES Instructor(InstructorID)
+);
+
+CREATE TABLE Enrollment(
+    EnrollmentID INT PRIMARY KEY,
+    StudentID INT,
+    CourseID INT,
+    EnrollmentDate DATE,
+    FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+    FOREIGN KEY (CourseID) REFERENCES Course(CourseID)
+);
+
+INSERT INTO Student VALUES
+(101, 'Sujal Malla', 'sujal.malla@gmail.com', 21, 'Pune'),
+(102, 'Suraj Pawar', 'suraj.pawar@gmail.com', 22, 'Mumbai'),
+(103, 'Jaysing Suryavanshi', 'jaysing.s@gmail.com', 21, 'Satara'),
+(104, 'Pritesh Pawar', 'pritesh.pawar@gmail.com', 22, 'Kolhapur'),
+(105, 'Vedant Singh', 'vedant.singh@gmail.com', 21, 'Nashik'),
+(106, 'Yash Devale', 'yash.devale@gmail.com', 22, 'Pune');
+
+INSERT INTO Instructor VALUES
+(201, 'Amit Kulkarni', 'amit.k@gmail.com', 'Artificial Intelligence'),
+(202, 'Sneha Patil', 'sneha.p@gmail.com', 'Data Science'),
+(203, 'Rahul Joshi', 'rahul.j@gmail.com', 'Cloud Computing');
+
+INSERT INTO Course VALUES
+(301, 'Machine Learning', 4, 201),
+(302, 'Deep Learning', 4, 201),
+(303, 'Big Data Analytics', 3, 202),
+(304, 'Cloud Computing', 3, 203),
+(305, 'Data Mining', 4, 202);
+
+INSERT INTO Enrollment VALUES
+(401, 101, 301, '2026-01-10'),
+(402, 102, 302, '2026-01-11'),
+(403, 103, 303, '2026-01-12'),
+(404, 104, 304, '2026-01-13'),
+(405, 105, 305, '2026-01-14'),
+(406, 106, 301, '2026-01-15');
+
+SELECT * FROM Student;
+
+SELECT * FROM Instructor;
+
+SELECT * FROM Course;
+
+SELECT * FROM Enrollment;

@@ -1,0 +1,57 @@
+CREATE DATABASE CustomerOrderDB;
+
+USE CustomerOrderDB;
+
+CREATE TABLE Customers(
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(50),
+    email VARCHAR(50),
+    city VARCHAR(50)
+);
+
+CREATE TABLE Orders(
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    order_date DATE,
+    amount DECIMAL(10,2)
+);
+
+INSERT INTO Customers VALUES
+(1,'Aditya Jadhav','aditya@gmail.com','Pune'),
+(2,'Neha Patil','neha@gmail.com','Mumbai'),
+(3,'Ruturaj Shinde','ruturaj@gmail.com','Nashik'),
+(4,'Pooja Deshmukh','pooja@gmail.com','Kolhapur'),
+(5,'Akshay Pawar','akshay@gmail.com','Nagpur');
+
+INSERT INTO Orders VALUES
+(101,1,'2026-01-10',5500),
+(102,1,'2026-01-15',3200),
+(103,2,'2026-01-12',7800),
+(104,6,'2026-01-18',4100);
+
+SELECT Customers.customer_name, Orders.order_id, Orders.amount
+FROM Customers
+INNER JOIN Orders
+ON Customers.customer_id = Orders.customer_id;
+
+SELECT Customers.customer_name, Orders.order_id, Orders.amount
+FROM Customers
+LEFT JOIN Orders
+ON Customers.customer_id = Orders.customer_id;
+
+SELECT Customers.customer_name, Orders.order_id, Orders.amount
+FROM Customers
+RIGHT JOIN Orders
+ON Customers.customer_id = Orders.customer_id;
+
+SELECT Customers.customer_name, Orders.order_id, Orders.amount
+FROM Customers
+LEFT JOIN Orders
+ON Customers.customer_id = Orders.customer_id
+
+UNION
+
+SELECT Customers.customer_name, Orders.order_id, Orders.amount
+FROM Customers
+RIGHT JOIN Orders
+ON Customers.customer_id = Orders.customer_id;

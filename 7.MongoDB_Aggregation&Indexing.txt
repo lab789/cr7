@@ -1,0 +1,193 @@
+╔══════════════════════════════════════╗
+║        STEP 1 : CREATE DATABASE     ║
+╚══════════════════════════════════════╝
+
+use UserManagementDB
+
+
+╔══════════════════════════════════════╗
+║      STEP 2 : INSERT DOCUMENTS      ║
+╚══════════════════════════════════════╝
+
+db.users.insertMany([
+{
+    userId: 101,
+    name: "Yash Devale",
+    age: 21,
+    city: "Pune",
+    department: "IT",
+    sales: 50000
+},
+{
+    userId: 102,
+    name: "Sujal Malla",
+    age: 22,
+    city: "Mumbai",
+    department: "HR",
+    sales: 35000
+},
+{
+    userId: 103,
+    name: "Jaysingh Suryavanshi",
+    age: 23,
+    city: "Nashik",
+    department: "IT",
+    sales: 42000
+},
+{
+    userId: 104,
+    name: "Dugesh Chavan",
+    age: 24,
+    city: "Satara",
+    department: "Finance",
+    sales: 28000
+},
+{
+    userId: 105,
+    name: "Suraj Pawar",
+    age: 20,
+    city: "Kolhapur",
+    department: "Marketing",
+    sales: 31000
+}
+])
+
+
+╔══════════════════════════════════════╗
+║       STEP 3 : READ OPERATIONS      ║
+╚══════════════════════════════════════╝
+
+db.users.find()
+
+db.users.find().pretty()
+
+db.users.find({ city: "Pune" })
+
+db.users.find({ sales: { $gt: 30000 } })
+
+
+╔══════════════════════════════════════╗
+║      STEP 4 : UPDATE OPERATIONS     ║
+╚══════════════════════════════════════╝
+
+db.users.updateOne(
+{ name: "Yash Devale" },
+{ $set: { sales: 60000 } }
+)
+
+db.users.updateMany(
+{ department: "IT" },
+{ $set: { bonus: 5000 } }
+)
+
+
+╔══════════════════════════════════════╗
+║       STEP 5 : DELETE OPERATION     ║
+╚══════════════════════════════════════╝
+
+db.users.deleteOne({ userId: 104 })
+
+
+╔══════════════════════════════════════╗
+║        STEP 6 : DISPLAY DATA        ║
+╚══════════════════════════════════════╝
+
+db.users.find().pretty()
+
+
+╔══════════════════════════════════════╗
+║       STEP 7 : AGGREGATION          ║
+╚══════════════════════════════════════╝
+
+db.users.aggregate([
+{
+$group: {
+_id: null,
+TotalSales: { $sum: "$sales" }
+}
+}
+])
+
+db.users.aggregate([
+{
+$group: {
+_id: null,
+AverageAge: { $avg: "$age" }
+}
+}
+])
+
+db.users.aggregate([
+{
+$group: {
+_id: "$department",
+EmployeeCount: { $sum: 1 }
+}
+}
+])
+
+db.users.aggregate([
+{
+$group: {
+_id: null,
+HighestSales: { $max: "$sales" }
+}
+}
+])
+
+db.users.aggregate([
+{
+$group: {
+_id: null,
+LowestSales: { $min: "$sales" }
+}
+}
+])
+
+
+╔══════════════════════════════════════╗
+║         STEP 8 : SORTING            ║
+╚══════════════════════════════════════╝
+
+db.users.find().sort({ age: 1 })
+
+db.users.find().sort({ sales: -1 })
+
+
+╔══════════════════════════════════════╗
+║      STEP 9 : CREATE INDEXES        ║
+╚══════════════════════════════════════╝
+
+db.users.createIndex({ name: 1 })
+
+db.users.createIndex({ department: 1 })
+
+db.users.createIndex({ city: 1, age: -1 })
+
+
+╔══════════════════════════════════════╗
+║       STEP 10 : VIEW INDEXES        ║
+╚══════════════════════════════════════╝
+
+db.users.getIndexes()
+
+
+╔══════════════════════════════════════╗
+║   STEP 11 : PERFORMANCE ANALYSIS    ║
+╚══════════════════════════════════════╝
+
+db.users.find({ name: "Yash Devale" }).explain("executionStats")
+
+
+╔══════════════════════════════════════╗
+║        STEP 12 : DROP INDEX         ║
+╚══════════════════════════════════════╝
+
+db.users.dropIndex("name_1")
+
+
+╔══════════════════════════════════════╗
+║        STEP 13 : FINAL OUTPUT       ║
+╚══════════════════════════════════════╝
+
+db.users.find().pretty()

@@ -1,0 +1,119 @@
+CREATE DATABASE EmployeeAuditDB;
+
+USE EmployeeAuditDB;
+
+CREATE TABLE employees(
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    department VARCHAR(50),
+    salary DECIMAL(10,2)
+);
+
+CREATE TABLE employee_audit(
+    audit_id INT AUTO_INCREMENT PRIMARY KEY,
+    emp_id INT,
+    action VARCHAR(20),
+    old_salary DECIMAL(10,2),
+    new_salary DECIMAL(10,2),
+    action_date DATETIME
+);
+
+INSERT INTO employees VALUES
+(1, 'Rahul Patil', 'IT', 50000);
+
+INSERT INTO employees VALUES
+(2, 'Neha Kulkarni', 'HR', 42000);
+
+INSERT INTO employees VALUES
+(3, 'Akshay Jadhav', 'IT', 47000);
+
+SELECT * FROM employees;
+
+DELIMITER //
+
+CREATE TRIGGER emp_insert_trigger
+AFTER INSERT ON employees
+FOR EACH ROW
+BEGIN
+
+INSERT INTO employee_audit(emp_id, action, new_salary, action_date)
+VALUES (NEW.emp_id, 'INSERT', NEW.salary, NOW());
+
+END //
+
+CREATE TRIGGER emp_update_trigger
+AFTER UPDATE ON employees
+FOR EACH ROW
+BEGIN
+
+INSERT INTO employee_audit(emp_id, action, old_salary, new_salary, action_date)
+VALUES (NEW.emp_id, 'UPDATE', OLD.salary, NEW.salary, NOW());
+
+END //
+
+CREATE TRIGGER emp_delete_trigger
+AFTER DELETE ON employees
+FOR EACH ROW
+BEGIN
+
+INSERT INTO employee_audit(emp_id, action, old_salary, action_date)
+VALUES (OLD.emp_id, 'DELETE', OLD.salary, NOW());
+
+END //
+
+DELIMITER ;
+
+INSERT INTO employees VALUES
+(4, 'Pooja Deshmukh', 'Finance', 45000);
+
+UPDATE employees
+SET salary = 55000
+WHERE emp_id = 1;
+
+DELETE FROM employees
+WHERE emp_id = 2;
+
+SELECT * FROM employee_audit;
+
+DELIMITER //
+
+CREATE PROCEDURE update_salary()
+
+BEGIN
+
+DECLARE done INT DEFAULT 0;
+DECLARE v_emp_id INT;
+DECLARE v_salary DECIMAL(10,2);
+
+DECLARE emp_cursor CURSOR FOR
+SELECT emp_id, salary
+FROM employees
+WHERE department = 'IT';
+
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+OPEN emp_cursor;
+
+read_loop: LOOP
+
+FETCH emp_cursor INTO v_emp_id, v_salary;
+
+IF done = 1 THEN
+LEAVE read_loop;
+END IF;
+
+UPDATE employees
+SET salary = v_salary * 1.10
+WHERE emp_id = v_emp_id;
+
+END LOOP;
+
+CLOSE emp_cursor;
+
+END //
+
+DELIMITER ;
+
+CALL update_salary();
+
+SELECT * FROM employees;

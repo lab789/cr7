@@ -1,0 +1,104 @@
+CREATE DATABASE AdvancedQueryDB;
+
+USE AdvancedQueryDB;
+
+CREATE TABLE Students(
+    student_id INT PRIMARY KEY,
+    student_name VARCHAR(50),
+    age INT,
+    department VARCHAR(50)
+);
+
+CREATE TABLE Courses(
+    course_id INT PRIMARY KEY,
+    course_name VARCHAR(50),
+    instructor VARCHAR(50),
+    credits INT
+);
+
+CREATE TABLE Enrollments(
+    enrollment_id INT PRIMARY KEY,
+    student_id INT,
+    course_id INT,
+    FOREIGN KEY (student_id) REFERENCES Students(student_id),
+    FOREIGN KEY (course_id) REFERENCES Courses(course_id)
+);
+
+INSERT INTO Students VALUES
+(1,'Aditya Patil',20,'Computer Science'),
+(2,'Rohit Jadhav',22,'AI & DS'),
+(3,'Neha Kulkarni',19,'Information Technology'),
+(4,'Pooja Shinde',21,'Computer Science'),
+(5,'Akash Pawar',23,'AI & DS'),
+(6,'Omkar Deshmukh',22,'Cyber Security');
+
+INSERT INTO Courses VALUES
+(101,'Database Systems','Dr. Sharma',4),
+(102,'Machine Learning','Dr. Kulkarni',3),
+(103,'Cloud Computing','Dr. Patil',3),
+(104,'Operating Systems','Dr. Mehta',4),
+(105,'Data Mining','Dr. Joshi',3);
+
+INSERT INTO Enrollments VALUES
+(1,1,101),
+(2,1,102),
+(3,2,102),
+(4,3,101),
+(5,4,103),
+(6,5,104),
+(7,6,105);
+
+SELECT * FROM Students
+WHERE age > 21;
+
+SELECT * FROM Courses
+WHERE instructor='Dr. Kulkarni';
+
+SELECT * FROM Students
+WHERE department='Computer Science';
+
+SELECT * FROM Students
+ORDER BY student_name ASC;
+
+SELECT * FROM Courses
+ORDER BY credits DESC;
+
+SELECT * FROM Students
+ORDER BY age ASC;
+
+SELECT department, COUNT(*) AS total_students
+FROM Students
+GROUP BY department;
+
+SELECT AVG(age) AS average_age
+FROM Students;
+
+SELECT course_id, COUNT(student_id) AS total_enrollments
+FROM Enrollments
+GROUP BY course_id;
+
+SELECT student_name
+FROM Students
+WHERE student_id IN (
+    SELECT student_id
+    FROM Enrollments
+    WHERE course_id = (
+        SELECT course_id
+        FROM Courses
+        WHERE course_name='Machine Learning'
+    )
+);
+
+SELECT course_name, credits
+FROM Courses
+WHERE credits > (
+    SELECT AVG(credits)
+    FROM Courses
+);
+
+SELECT *
+FROM Students
+WHERE age = (
+    SELECT MAX(age)
+    FROM Students
+);

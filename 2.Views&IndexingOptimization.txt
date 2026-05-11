@@ -1,0 +1,92 @@
+CREATE DATABASE StudentViewDB;
+
+USE StudentViewDB;
+
+CREATE TABLE Student(
+    StudentID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Email VARCHAR(50),
+    Age INT,
+    Address VARCHAR(100)
+);
+
+CREATE TABLE Course(
+    CourseID INT PRIMARY KEY,
+    CourseName VARCHAR(50),
+    Credits INT
+);
+
+CREATE TABLE Enrollment(
+    EnrollmentID INT PRIMARY KEY,
+    StudentID INT,
+    CourseID INT,
+    EnrollmentDate DATE,
+    FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+    FOREIGN KEY (CourseID) REFERENCES Course(CourseID)
+);
+
+INSERT INTO Student VALUES
+(1, 'Sujal Malla', 'sujal@gmail.com', 21, 'Pune'),
+(2, 'Suraj Pawar', 'suraj@gmail.com', 22, 'Mumbai'),
+(3, 'Jaysing Suryavanshi', 'jaysing@gmail.com', 21, 'Satara'),
+(4, 'Pritesh Pawar', 'pritesh@gmail.com', 22, 'Kolhapur'),
+(5, 'Vedant Singh', 'vedant@gmail.com', 21, 'Nashik'),
+(6, 'Yash Devale', 'yash@gmail.com', 22, 'Pune');
+
+INSERT INTO Course VALUES
+(101, 'Machine Learning', 4),
+(102, 'Deep Learning', 4),
+(103, 'Cloud Computing', 3),
+(104, 'Big Data Analytics', 4),
+(105, 'Data Mining', 3);
+
+INSERT INTO Enrollment VALUES
+(201, 1, 101, '2026-01-10'),
+(202, 2, 102, '2026-01-11'),
+(203, 3, 103, '2026-01-12'),
+(204, 4, 104, '2026-01-13'),
+(205, 5, 105, '2026-01-14'),
+(206, 6, 101, '2026-01-15');
+
+CREATE VIEW StudentCourseView AS
+SELECT s.StudentID, s.Name, c.CourseName, e.EnrollmentDate
+FROM Student s
+JOIN Enrollment e ON s.StudentID = e.StudentID
+JOIN Course c ON e.CourseID = c.CourseID;
+
+SELECT * FROM StudentCourseView;
+
+SHOW FULL TABLES
+WHERE Table_type='VIEW';
+
+DESCRIBE StudentCourseView;
+
+SHOW CREATE VIEW StudentCourseView;
+
+UPDATE StudentCourseView
+SET Name='Suraj S Pawar'
+WHERE StudentID=2;
+
+SELECT * FROM Student;
+
+INSERT INTO StudentCourseView
+(StudentID, Name, CourseName, EnrollmentDate)
+VALUES (7, 'Rohit Patil', 'Artificial Intelligence', '2026-02-10');
+
+DELETE FROM StudentCourseView
+WHERE StudentID=4;
+
+CREATE INDEX idx_student_name
+ON Student(Name);
+
+CREATE INDEX idx_course_name
+ON Course(CourseName);
+
+SHOW INDEX FROM Student;
+
+EXPLAIN SELECT * FROM Student
+WHERE Name='Sujal Malla';
+
+EXPLAIN ANALYZE
+SELECT * FROM Student
+WHERE Name='Sujal Malla';

@@ -1,0 +1,64 @@
+CREATE DATABASE salesdb_101;
+
+USE salesdb_101;
+
+CREATE TABLE sales (
+    sale_id INT AUTO_INCREMENT PRIMARY KEY,
+    product_name VARCHAR(50),
+    quantity INT,
+    price DECIMAL(10,2),
+    sale_date DATE
+);
+
+DESC sales;
+
+DELIMITER //
+
+CREATE PROCEDURE add_sale(
+    IN p_product_name VARCHAR(50),
+    IN p_quantity INT,
+    IN p_price DECIMAL(10,2),
+    IN p_sale_date DATE
+)
+
+BEGIN
+
+INSERT INTO sales(product_name, quantity, price, sale_date)
+VALUES (p_product_name, p_quantity, p_price, p_sale_date);
+
+END //
+
+DELIMITER ;
+
+CALL add_sale('Laptop', 2, 50000, '2026-03-17');
+
+CALL add_sale('Mouse', 5, 500, '2026-03-17');
+
+CALL add_sale('Keyboard', 3, 1200, '2026-03-17');
+
+CALL add_sale('Monitor', 1, 15000, '2026-03-17');
+
+SELECT * FROM sales;
+
+DELIMITER //
+
+CREATE FUNCTION total_sales()
+RETURNS DECIMAL(10,2)
+
+DETERMINISTIC
+
+BEGIN
+
+DECLARE total DECIMAL(10,2);
+
+SELECT SUM(quantity * price)
+INTO total
+FROM sales;
+
+RETURN total;
+
+END //
+
+DELIMITER ;
+
+SELECT total_sales();
