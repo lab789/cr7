@@ -1,0 +1,316 @@
+Experiment 1 – Database Creation
+Aim
+
+To create and manage Student Management System database using MySQL.
+
+Software Used
+Ubuntu Linux
+MySQL
+Theory
+
+MySQL is a relational database management system used to store and manage structured data. In this experiment, Student, Instructor, Course and Enrollment tables were created using primary keys and foreign keys. Relationships between tables were established to maintain data integrity and consistency.
+
+Algorithm
+Create database
+Create tables
+Insert records
+Apply primary and foreign keys
+Display records using SELECT query
+Important Commands Used
+CREATE DATABASE StudentManagementDB;
+CREATE TABLE Student(...);
+INSERT INTO Student VALUES(...);
+SELECT * FROM Student;
+Result
+
+Database and tables were created successfully and records were inserted properly.
+
+Conclusion
+
+The Student Management System database was implemented successfully using MySQL.
+
+Experiment 2 – Views and Indexing
+Aim
+
+To study views and indexing in MySQL.
+
+Software Used
+Ubuntu Linux
+MySQL
+Theory
+
+Views are virtual tables created from SQL queries to simplify complex operations and improve security. Indexes improve the speed of searching and retrieval operations. In this experiment, views were created using JOIN operations and indexes were applied on frequently searched columns.
+
+Algorithm
+Create database and tables
+Insert records
+Create view using JOIN
+Perform UPDATE and DELETE through view
+Create indexes
+Analyze query performance
+Important Commands Used
+CREATE VIEW StudentCourseView AS ...
+CREATE INDEX idx_student_name ON Student(Name);
+SHOW INDEX FROM Student;
+EXPLAIN SELECT * FROM Student;
+Advantages
+Simplifies complex queries
+Improves query performance
+Faster searching
+Result
+
+Views and indexes were created successfully and performance analysis was performed.
+
+Conclusion
+
+Views and indexing improved query handling and retrieval speed.
+
+Experiment 3 – Filtering, Sorting and Nested Queries
+Aim
+
+To perform filtering, sorting and nested queries using SQL.
+
+Software Used
+Ubuntu Linux
+MySQL
+Theory
+
+SQL provides filtering and sorting operations using WHERE and ORDER BY clauses. Aggregate functions with GROUP BY help in data analysis. Nested queries retrieve data based on another query result.
+
+Algorithm
+Create database and tables
+Insert records
+Apply filtering queries
+Perform sorting operations
+Execute GROUP BY queries
+Execute nested queries
+Important Commands Used
+SELECT * FROM Students WHERE age > 21;
+SELECT * FROM Students ORDER BY age ASC;
+SELECT AVG(age) FROM Students;
+Advantages
+Easy data filtering
+Better report generation
+Efficient data analysis
+Result
+
+Filtering, sorting and nested queries executed successfully.
+
+Conclusion
+
+SQL queries were successfully used for data retrieval and analysis.
+
+Experiment 4 – Multi Table Joins
+Aim
+
+To study different types of joins in SQL.
+
+Software Used
+Ubuntu Linux
+MySQL
+Theory
+
+Joins combine data from multiple related tables. INNER JOIN returns matching records, LEFT JOIN returns all records from left table, RIGHT JOIN returns all records from right table, and FULL OUTER JOIN combines both results.
+
+Algorithm
+Create Customers and Orders tables
+Insert records
+Apply INNER JOIN
+Apply LEFT JOIN
+Apply RIGHT JOIN
+Apply FULL OUTER JOIN using UNION
+Important Commands Used
+INNER JOIN
+LEFT JOIN
+RIGHT JOIN
+UNION
+Advantages
+Combines related data
+Reduces redundancy
+Useful for report generation
+Result
+
+Different join operations were performed successfully.
+
+Conclusion
+
+Join operations were successfully implemented to retrieve related records.
+
+Experiment 5 – Stored Procedures and Functions
+Aim
+
+To implement stored procedures and functions in MySQL.
+
+Software Used
+Ubuntu Linux
+MySQL
+Theory
+
+Stored procedures are predefined SQL blocks used to perform tasks repeatedly. Functions return values after performing calculations. These objects improve modularity and reduce query repetition.
+
+Algorithm
+Create database and table
+Insert records
+Create stored procedure
+Call procedure
+Create function
+Execute function
+Important Commands Used
+CREATE PROCEDURE add_sale(...)
+CREATE FUNCTION total_sales()
+CALL add_sale(...)
+SELECT total_sales();
+Advantages
+Code reusability
+Reduces redundancy
+Improves modularity
+Result
+
+Stored procedures and functions were created and executed successfully.
+
+Conclusion
+
+Procedures and functions simplified database operations successfully.
+
+Experiment 6 – Triggers and Cursors
+Aim
+
+To study triggers and cursors in MySQL.
+
+Software Used
+Ubuntu Linux
+MySQL
+Theory
+
+Triggers execute automatically when INSERT, UPDATE or DELETE operations occur. Cursors process records row by row. Triggers are useful for audit logs while cursors are used for iterative processing.
+
+Algorithm
+Create employee tables
+Insert records
+Create INSERT, UPDATE and DELETE triggers
+Execute operations
+Create cursor procedure
+Update salaries using cursor
+Important Commands Used
+CREATE TRIGGER ...
+CREATE PROCEDURE update_salary()
+CURSOR
+FETCH
+Advantages
+Automatic auditing
+Data consistency
+Row-by-row processing
+Result
+
+Triggers and cursors executed successfully.
+
+Conclusion
+
+Triggers and cursors automated database operations effectively.
+
+Experiment 7 – MongoDB Aggregation and Indexing
+Aim
+
+To perform CRUD operations, aggregation and indexing using MongoDB.
+
+Software Used
+Ubuntu Linux
+MongoDB
+Theory
+
+MongoDB is a NoSQL database that stores data in BSON format. CRUD operations are used for data management. Aggregation framework performs analysis while indexing improves query performance.
+
+Algorithm
+Create MongoDB database
+Insert documents
+Perform CRUD operations
+Execute aggregation queries
+Create indexes
+Analyze performance
+Important Commands Used
+db.users.insertMany()
+db.users.find()
+db.users.aggregate()
+db.users.createIndex()
+Advantages
+Flexible schema
+Fast performance
+Easy scalability
+Result
+
+CRUD operations, aggregation and indexing were performed successfully.
+
+Conclusion
+
+MongoDB handled NoSQL operations and performance optimization successfully.
+
+Experiment 8 – Social Media Data Processing using MongoDB
+Aim
+
+To process social media data using MongoDB.
+
+Software Used
+Ubuntu Linux
+MongoDB
+Theory
+
+MongoDB is suitable for storing unstructured social media data such as posts, hashtags, likes and comments. Aggregation is used for analyzing trending hashtags and user activity while indexing improves searching speed.
+
+Algorithm
+Create social media database
+Insert social media posts
+Perform filtering and sorting
+Execute aggregation queries
+Create indexes
+Analyze performance
+Important Commands Used
+db.posts.insertMany()
+db.posts.aggregate()
+db.posts.createIndex()
+db.posts.find().sort()
+Advantages
+Handles unstructured data
+Fast data retrieval
+Efficient hashtag analysis
+Result
+
+Social media data was processed and analyzed successfully.
+
+Conclusion
+
+MongoDB proved effective for processing large-scale social media data.
+
+Experiment 9 – Backup and Recovery
+Aim
+
+To perform database backup and recovery using MySQL.
+
+Software Used
+Ubuntu Linux
+MySQL
+Theory
+
+Backup is the process of creating a copy of database data to prevent data loss. Recovery restores the database after accidental deletion or system failure. MySQL provides mysqldump utility for backup and restore operations.
+
+Algorithm
+Create database and table
+Insert records
+Take backup using mysqldump
+Delete database
+Restore database
+Verify recovery
+Important Commands Used
+mysqldump collegeDB > collegeDB_backup.sql
+DROP DATABASE collegeDB;
+mysql collegeDB < collegeDB_backup.sql
+Advantages
+Prevents data loss
+Easy recovery
+Improves data safety
+Result
+
+Database backup and recovery were completed successfully.
+
+Conclusion
+
+Backup and recovery operations were successfully implemented using MySQL utilities.
